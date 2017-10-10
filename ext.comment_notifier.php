@@ -18,7 +18,7 @@ class Comment_notifier_ext {
      */
     function __construct($settings='')
     {
-	$this->settings = $settings;
+		$this->settings = $settings;
     }
 
     /**
@@ -36,7 +36,7 @@ class Comment_notifier_ext {
         $data = array(
             'class'    => __CLASS__,
             'method'   => 'send_comment',
-            'hook'     => 'comment_sent_end',
+            'hook'     => 'insert_comment_end',
             'settings' => serialize($this->settings),
             'priority' => 1,
             'version'  => $this->version,
@@ -74,6 +74,35 @@ class Comment_notifier_ext {
                     array('version' => $this->version)
         );
     }
+
+	/**
+	 * Send Comment
+	 *
+	 * Sends comment to notification server.
+     *
+	 * @param	array	 comment data
+	 * @param	boolean	if commented will be moderated
+	 * @param	int		comment id
+	 * 
+	 * @return void
+	 */
+	function send_comment($data, $moderated_flag, $commend_id)
+	{
+		var $data_json = json_encode($data);
+
+		var $opts = array('http' =>
+			array(
+				'method' => 'POST',
+				'header' => 'Content-type: application/json \r\n' .
+							'Authorization: Basic '. $this->settings['key'],
+				'content' => $data_json
+			}
+		);
+
+		$context = stream_context_create($opts);
+
+		file_get_contents($this->settings['server_url'], false, $context);	
+	}
 
     // ----------------------
 	// Settings
