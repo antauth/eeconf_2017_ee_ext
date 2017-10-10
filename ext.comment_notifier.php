@@ -1,10 +1,9 @@
 <?php
-namespace RS;
 
 class Comment_notifier_ext {
 
     var $name     = 'Comment Notifier';
-    var $version  = '1.0';
+    var $version  = '0.0.1';
     var $description = 'Notify secondary server of comment post';
     var $settings_exist = 'y';
     var $docs_url = '';
