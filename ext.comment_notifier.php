@@ -8,7 +8,7 @@ class Comment_notifier_ext {
     var $settings_exist = 'y';
     var $docs_url = '';
 
-    var $settings = array();
+    var $settings = [];
 
     /**
      * Constructor
@@ -18,6 +18,7 @@ class Comment_notifier_ext {
     function __construct($settings='')
     {
 		$this->settings = $settings;
+		ee()->load->library('logger');
     }
 
     /**
@@ -30,9 +31,7 @@ class Comment_notifier_ext {
     function activate_extension()
     {
 
-        $this->settings = array();
-
-        $data = array(
+        $data = [
             'class'    => __CLASS__,
             'method'   => 'send_comment',
             'hook'     => 'insert_comment_end',
@@ -40,7 +39,7 @@ class Comment_notifier_ext {
             'priority' => 1,
             'version'  => $this->version,
             'enabled'  => 'y'
-        );
+        ];
 
         ee()->db->insert('extensions', $data);
     }
@@ -55,7 +54,7 @@ class Comment_notifier_ext {
     function update_extension($current = '')
     {
   
-        if ($current == '' OR $current == $this->version)
+        if ($current == '' || $current == $this->version)
         {
 
             return FALSE;
@@ -87,20 +86,25 @@ class Comment_notifier_ext {
 	 */
 	function send_comment($data, $moderated_flag, $commend_id)
 	{
-		var $data_json = json_encode($data);
+		$data_json = json_encode($data);
 
-		var $opts = array('http' =>
-			array(
+		$opts = ['http' =>
+			[
 				'method' => 'POST',
 				'header' => 'Content-type: application/json \r\n' .
 							'Authorization: Basic '. $this->settings['key'],
 				'content' => $data_json
-			}
-		);
+			]
+		];
 
 		$context = stream_context_create($opts);
 
-		file_get_contents($this->settings['server_url'], false, $context);	
+		if(@file_get_contents($this->settings['server_url'], false, $context))
+		{
+			ee()->logger->developer('success: comment sent to notification service');
+		} else {
+			ee()->logger->developer('error sending commnent to notification service');
+		}
 	}
 
     // ----------------------
@@ -110,13 +114,13 @@ class Comment_notifier_ext {
 	function settings()
 	{
 
-		$settings = array();
+		$settings = [];
 
 		// server url text input with default value
-        $settings['server_url']		= array('i', '', "http://localhost:8186");
+        $settings['server_url']		= ['i', '', "http://localhost:8186"];
 		
 		// key that accompanies requests to server with default value
-		$settings['key']		= array('i', '', "7wYbQWyo3KNb7eb");
+		$settings['key']		= ['i', '', "7wYbQWyo3KNb7eb"];
 
 		return $settings;
 

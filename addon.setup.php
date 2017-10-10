@@ -6,6 +6,6 @@ return array(
     'name'          => 'Comment Notifier',
     'description'   => 'Notifies secondary server that a comment has been posted',
     'version'       => '0.0.1',
-    'namespace'     => 'RS\CommentNotifier',
+    'namespace'     => 'CommentNotifier',
     'settings_exist' => TRUE
 );
