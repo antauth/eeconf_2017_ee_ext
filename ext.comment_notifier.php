@@ -84,14 +84,14 @@ class Comment_notifier_ext {
 	 * 
 	 * @return void
 	 */
-	function send_comment($data, $moderated_flag, $commend_id)
+	function send_comment($data, $moderated_flag, $comment_id)
 	{
 		$data_json = json_encode($data);
 
 		$opts = ['http' =>
 			[
 				'method' => 'POST',
-				'header' => 'Content-type: application/json \r\n' .
+				'header' => 'Content-Type: application/json \r\n' .
 							'Authorization: Basic '. $this->settings['key'],
 				'content' => $data_json
 			]
