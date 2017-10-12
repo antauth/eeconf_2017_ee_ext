@@ -99,7 +99,7 @@ class Comment_notifier_ext {
 
 		$context = stream_context_create($opts);
 
-		if(@file_get_contents($this->settings['server_url'].'/comment', false, $context))
+		if(@file_get_contents($this->settings['server_url'].'/comment/'.$comment_id, false, $context))
 		{
 			ee()->logger->developer('success: comment sent to notification service');
 		} else {
