@@ -91,8 +91,8 @@ class Comment_notifier_ext {
 		$opts = ['http' =>
 			[
 				'method' => 'POST',
-				'header' => 'Content-Type: application/json \r\n' .
-							'Authorization: Basic '. $this->settings['key'],
+				'header' => "Content-Type: application/json", 
+							//"Authorization: Basic ". $this->settings['key'],
 				'content' => $data_json
 			]
 		];
