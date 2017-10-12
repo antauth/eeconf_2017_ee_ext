@@ -79,13 +79,16 @@ class Comment_notifier_ext {
 	 * Sends comment to notification server.
      *
 	 * @param	array	 comment data
-	 * @param	boolean	if commented will be moderated
+	 * @param	boolean	if comment will be moderated
 	 * @param	int		comment id
 	 * 
 	 * @return void
 	 */
 	function send_comment($data, $moderated_flag, $comment_id)
 	{
+        ee()->load->helper('url');
+        $data['entry_url'] = ee()->url->current_url();
+
 		$data_json = json_encode($data);
 
 		$opts = ['http' =>
