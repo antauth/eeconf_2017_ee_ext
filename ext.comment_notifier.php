@@ -87,7 +87,7 @@ class Comment_notifier_ext {
 	function send_comment($data, $moderated_flag, $comment_id)
 	{
         ee()->load->helper('url');
-        $data['entry_url'] = ee()->url->current_url();
+        $data['entry_url'] = current_url();
 
 		$data_json = json_encode($data);
 
