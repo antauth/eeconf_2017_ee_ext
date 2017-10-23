@@ -10,3 +10,8 @@ Extension built for local demonstration of socket-based real-time comment and no
 2. Clone this repo to /system/user/addons/comment_notifier.
 3. Login to your EE site's admin and install this add-on.
 4. Update Comment Notifier URL (in the add-on settings) to match that of your service.
+
+# See also
+
+* Node Service - https://github.com/antauth/eeconf_2017_node_service
+* Angular App - https://github.com/antauth/eeconf_2017_angular_client_app
